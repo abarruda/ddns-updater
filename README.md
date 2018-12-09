@@ -4,6 +4,12 @@ Dynamic Domain Naming Service Updater for Afraid.org affiliated addresses.
 ### Overview
 DDNS domains will be updated roughly every 5 minutes by `cron` running in a docker container.
 
+### Building
+The docker image must be built prior to running the `run.sh` script.  The script expects an image name of `ddns-updater`:
+```
+docker build -t ddns-updater .
+```
+
 ### Running
 The environment variable `DDNS_KEY` must be set to the key found in the example update scripts on [Afraid.org](http://freedns.afraid.org/dynamic/):
 
