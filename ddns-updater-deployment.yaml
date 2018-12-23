@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns-updater-deployment
+  labels:
+    app: ddns-updater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddns-updater
+  template:
+    metadata:
+      labels:
+        app: ddns-updater
+    spec:
+      containers:
+      - name: ddns-updater-container
+        image: ddns-updater:latest
+        imagePullPolicy: Never
+        env:
+          - name: DDNS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ddns-primary
+                key: api-key
+  restartPolicy: Always
