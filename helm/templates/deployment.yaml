@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns-updater-deployment
+  labels:
+    app: ddns-updater
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: ddns-updater
+  template:
+    metadata:
+      labels:
+        app: ddns-updater
+    spec:
+      containers:
+      - name: ddns-updater-container
+        image: ddns-updater:latest
+        imagePullPolicy: Never
+        env:
+          - name: {{ index .Values "env" "var-api-key" }}
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Chart.Name }}-api-key-secret-{{ .Release.Name }}"
+                key: {{ .Values.secret.key }}
+  restartPolicy: Always
+
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: "{{ .Values.affinity.node.label }}"
+              operator: In
+              values: {{ .Values.affinity.node.value }}

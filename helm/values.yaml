@@ -1,0 +1,15 @@
+replicaCount: 1
+
+affinity:
+  node:
+    label: "network"
+    value: ["mbit"]
+
+secret:
+  key: "api-key"
+  api:
+    key:
+
+env:
+  var-api-key: "DDNS_KEY"
+
