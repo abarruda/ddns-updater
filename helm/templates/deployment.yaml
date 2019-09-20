@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ddns-updater-deployment
+  name: {{ .Chart.Name }}-{{ .Release.Name }}
   labels:
     app: ddns-updater
 spec:
@@ -23,14 +23,14 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: "{{ .Chart.Name }}-api-key-secret-{{ .Release.Name }}"
-                key: {{ .Values.secret.key }}
+                key: {{ .Values.secret.api.keyName }}
   restartPolicy: Always
 
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-            - key: "{{ .Values.affinity.node.label }}"
+            - key: "network"
               operator: In
-              values: {{ .Values.affinity.node.value }}
+              values: ["gbit"]

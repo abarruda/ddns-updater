@@ -3,13 +3,15 @@ replicaCount: 1
 affinity:
   node:
     label: "network"
-    value: ["mbit"]
+    value: ["gbit"]
 
 secret:
-  key: "api-key"
   api:
-    key:
+    keyName: "api-key"
+    keyValue:
+  domain:
+    keyName: "domain"
+    name:
 
 env:
   var-api-key: "DDNS_KEY"
-
