@@ -1,0 +1,18 @@
+replicaCount: 1
+
+affinity:
+  weight: 100
+  node:
+    label:
+    value: 
+
+secret:
+  api:
+    keyName: "api-key"
+    keyValue:
+  domain:
+    keyName: "domain"
+    name:
+
+env:
+  var-api-key: "DDNS_KEY"
