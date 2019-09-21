@@ -1,9 +1,10 @@
 replicaCount: 1
 
 affinity:
+  weight: 100
   node:
-    label: "network"
-    value: ["gbit"]
+    label:
+    value: 
 
 secret:
   api:
