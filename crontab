@@ -1,1 +1,0 @@
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * root sleep $(shuf -i 10-60 -n 1) && (echo $(date) && curl -s http://sync.afraid.org/u/$DDNS_KEY/) > /proc/1/fd/1 2>/proc/1/fd/2
