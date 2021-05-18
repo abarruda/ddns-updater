@@ -15,8 +15,4 @@ ddns-updater-test \
 kubectl get nodes
 kubectl get cronjob
 
-# sleep 120
-
-
-# k3d registry delete k3d-vax-cluster-registry.localhost
-#k3d cluster delete vax-cluster
+#k3d cluster delete ddns-updater-cluster
