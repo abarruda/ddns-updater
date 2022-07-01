@@ -13,6 +13,3 @@ secret:
   domain:
     keyName: "domain"
     name:
-
-env:
-  var-api-key: "DDNS_KEY"

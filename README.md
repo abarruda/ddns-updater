@@ -2,32 +2,23 @@
 Dynamic Domain Naming Service Updater for Afraid.org affiliated addresses.
 
 ### Overview
-DDNS domains will be updated roughly every 5 minutes by `cron` running in a docker container.
-
-### Building
-The docker image must be built prior to running the `run.sh` script.  The script expects an image name of `ddns-updater`:
-```
-docker build -t ddns-updater .
-```
+DDNS domains will be updated every 5 minutes by a Kubernetes `CronJob`
 
 ### Running
-The environment variable `DDNS_KEY` must be set to the key found in the example update scripts on [Afraid.org](http://freedns.afraid.org/dynamic/):
+The Afraid.org API key must be set to the key found in the example update scripts on [Afraid.org](http://freedns.afraid.org/dynamic/):
 
 ```
-export DDNS_KEY=<key here>
-./run.sh <domain name>
+$ pwd
+ddns-updater
+$ cd  helm
+$ helm upgrade --install --debug \
+ddns-updater-test-com \
+--set secret.api.keyValue=apiKeyHere \
+--set secret.domain.name=domainNameForLogs \
+--set affinity.node.label=network \
+--set affinity.node.value={mbit} \
+.
 ```
-
-Each invocation will spin up a container responsible for the domain associated to the given key.  The container will be named after the domain passed to the script to make it easily identifiable. Change the `DDNS_KEY` environment variable before running the `run.sh` script again to update additonal domains.
 
 ### Logging
-Output from the updates is logged to STDOUT of the container, so logging can be viewed by:
-
-```
-$ docker logs -f ddns-updater-test-domain.com
-
-Sun Dec 9 23:05:17 UTC 2018
-No IP change detected for test-domain.com with IP 1.2.3.4, skipping update
-Sun Dec 9 23:10:20 UTC 2018
-No IP change detected for test-domain.com with IP 1.2.3.4, skipping update
-```
+Checking Pod output via `kubectl logs -f xyz` will expose the result of the last update attempt.
