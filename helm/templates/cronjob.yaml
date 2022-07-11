@@ -7,6 +7,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            name: {{ .Release.Name }}
         spec:
           containers:
           - name: ddns-updater
